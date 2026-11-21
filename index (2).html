@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS Speaking Mock Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#13233f;--navy2:#1d3460;--red:#c8102e;--red2:#e23a52;--bg:#f5f3ee;--card:#fff;--ink:#1a1f2b;--muted:#667085;--line:#e4e1d8;--ok:#1f8a5b;--warn:#c27a00;--soft:#eef2f9}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:16px;line-height:1.55}
+button{font:inherit;cursor:pointer}
+.hidden{display:none!important}
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;display:flex;align-items:center;gap:16px;padding:10px 20px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.brand{font-weight:800;letter-spacing:.3px;font-size:15px;white-space:nowrap}
+.brand b{color:var(--red2)}
+.partpill{background:rgba(255,255,255,.12);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;white-space:nowrap}
+.spacer{flex:1}
+.clock{font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;display:flex;gap:14px;align-items:center}
+.clock small{opacity:.65;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.8px;margin-right:4px}
+.clock .big{font-size:22px;background:rgba(255,255,255,.1);padding:2px 12px;border-radius:8px;min-width:84px;text-align:center}
+.clock .big.warn{background:var(--warn)}.clock .big.danger{background:var(--red)}
+.progress{height:4px;background:rgba(255,255,255,.12);position:absolute;left:0;right:0;bottom:0}
+.progress i{display:block;height:100%;background:var(--red2);width:0;transition:width .4s}
+.endbtn{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:5px 10px;font-size:13px}
+.wrap{max-width:900px;margin:0 auto;padding:28px 20px 60px}
+/* start */
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:22px;padding:36px 34px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(226,58,82,.55),transparent 70%)}
+.hero h1{font-family:Fraunces,serif;font-size:38px;line-height:1.1;margin:6px 0 10px}
+.hero .kick{font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:.75;font-weight:700}
+.hero p{opacity:.9;max-width:600px;margin:0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.pcard .n{font-family:Fraunces,serif;font-size:26px;color:var(--red)}
+.pcard h3{margin:2px 0 6px;font-size:16px}
+.pcard p{margin:0;color:var(--muted);font-size:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin-top:16px}
+.panel h2{margin:0 0 14px;font-size:18px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:13px;font-weight:700;color:var(--muted)}
+input[type=text],select,textarea{font:inherit;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy2)}
+.row{display:flex;gap:14px;flex-wrap:wrap}.row>.field{flex:1;min-width:200px}
+.check{display:flex;gap:10px;align-items:center;font-size:14px;margin:4px 0}
+.btn{border:0;border-radius:12px;padding:13px 22px;font-weight:700;font-size:16px;display:inline-flex;align-items:center;gap:10px;justify-content:center;transition:transform .1s,box-shadow .2s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--red);color:#fff;box-shadow:0 6px 18px rgba(200,16,46,.28)}
+.btn.primary:hover{background:#ad0d27}
+.btn.dark{background:var(--navy);color:#fff}
+.btn.ghost{background:var(--soft);color:var(--navy)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.note{font-size:13px;color:var(--muted);background:#fbfaf6;border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:12px}
+.status{font-size:13px;display:flex;gap:16px;flex-wrap:wrap;margin-top:10px}
+.status span{display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:#bbb}.dot.on{background:var(--ok)}.dot.warn{background:var(--warn)}.dot.off{background:var(--red)}
+/* exam */
+.stage{display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:start}
+.examiner{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center;position:sticky;top:80px}
+.avatar{width:110px;height:110px;margin:0 auto 10px;border-radius:50%;background:linear-gradient(160deg,#dfe6f3,#c5d1e8);display:flex;align-items:center;justify-content:center;position:relative}
+.avatar:before{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid transparent}
+.examiner.talking .avatar:before{border-color:var(--red2);animation:pulse 1.2s infinite}
+@keyframes pulse{0%{transform:scale(1);opacity:1}100%{transform:scale(1.12);opacity:0}}
+.examiner .nm{font-weight:800}.examiner .rl{font-size:12px;color:var(--muted)}
+.wave{display:flex;gap:3px;justify-content:center;height:22px;align-items:center;margin-top:10px;opacity:0;transition:opacity .2s}
+.examiner.talking .wave{opacity:1}
+.wave i{width:4px;background:var(--red2);border-radius:2px;animation:w 0.9s infinite ease-in-out}
+.wave i:nth-child(2){animation-delay:.1s}.wave i:nth-child(3){animation-delay:.2s}.wave i:nth-child(4){animation-delay:.3s}.wave i:nth-child(5){animation-delay:.4s}
+@keyframes w{0%,100%{height:5px}50%{height:20px}}
+.repeat{margin-top:12px;font-size:13px;padding:7px 12px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--navy)}
+.main{min-width:0}
+.bubble{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;min-height:120px}
+.bubble .who{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.bubble .lead{color:var(--muted);margin-bottom:6px}
+.bubble .qtext{font-size:22px;font-weight:700;line-height:1.35}
+.bubble .qhidden{color:var(--muted);font-style:italic}
+.cue{border:2px solid var(--navy);border-radius:14px;padding:18px 20px;margin-top:6px;background:#fdfcf8}
+.cue h3{margin:0 0 10px;font-size:20px}
+.cue ul{margin:6px 0 0;padding-left:22px}.cue li{margin:3px 0}
+.answerbox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 24px;margin-top:16px}
+.answerbox .lbl{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--navy2);display:flex;justify-content:space-between}
+.transcript{min-height:90px;font-size:17px;padding:10px 0;white-space:pre-wrap}
+.transcript .partial{color:var(--muted)}
+.transcript .ph{color:#b0aca0;font-style:italic}
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.micbtn{position:relative}
+.micbtn.rec{background:var(--navy)}
+.micbtn.rec:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--red2);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.hint{font-size:13px;color:var(--muted)}
+.notes{width:100%;min-height:130px;margin-top:10px}
+.bar{height:8px;background:var(--soft);border-radius:999px;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;background:var(--navy2);transition:width .25s linear}
+.tg{display:flex;align-items:center;gap:14px;background:linear-gradient(90deg,#229ED9,#1c7fb3);color:#fff;border-radius:16px;padding:16px 20px;margin-top:22px;text-decoration:none}
+.tg svg{flex:none}.tg b{display:block;font-size:16px}.tg span{font-size:13px;opacity:.92}
+/* results */
+.loading{text-align:center;padding:60px 20px}
+.spinner{width:54px;height:54px;border:5px solid var(--soft);border-top-color:var(--red);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scorehead{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:22px;padding:26px}
+.ring{width:170px;height:170px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:conic-gradient(var(--red2) calc(var(--p)*1%),rgba(255,255,255,.15) 0);position:relative;margin:auto}
+.ring:before{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--navy)}
+.ring *{position:relative}.ring .v{font-family:Fraunces,serif;font-size:52px;line-height:1}.ring .t{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;opacity:.75}
+.crit4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cb{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 14px}
+.cb .k{font-size:12px;opacity:.8}.cb .b{font-size:24px;font-weight:800}
+.cb .m{height:6px;background:rgba(255,255,255,.15);border-radius:6px;margin-top:4px}.cb .m i{display:block;height:100%;background:var(--red2);border-radius:6px}
+.sec{margin-top:26px}
+.sec>h2{font-family:Fraunces,serif;font-size:24px;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.ccard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px}
+.ccard .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.ccard h3{margin:0;font-size:18px}
+.bandtag{background:var(--navy);color:#fff;font-weight:800;border-radius:10px;padding:4px 12px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+.cols h4{margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.8px}
+.cols ul{margin:0;padding-left:20px}.cols li{margin:4px 0;font-size:15px}
+.good h4{color:var(--ok)}.bad h4{color:var(--red)}
+.tips{background:var(--soft);border-radius:10px;padding:10px 14px;margin-top:12px}
+.tips h4{margin:0 0 4px;font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--navy2)}
+.tips ul{margin:0;padding-left:20px}
+table.err{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;font-size:15px}
+table.err th{background:var(--navy);color:#fff;text-align:left;padding:10px 12px;font-size:13px}
+table.err td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+.wrong{color:var(--red);text-decoration:line-through;text-decoration-color:rgba(200,16,46,.5)}
+.right{color:var(--ok);font-weight:700}
+.tagt{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;background:var(--soft);color:var(--navy2);border-radius:6px;padding:2px 7px;margin-bottom:4px}
+.qa{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 22px;margin-bottom:12px}
+.qa .q{font-weight:800;font-size:16px}
+.qa .meta{font-size:12px;color:var(--muted);margin:4px 0 8px}
+.qa .yours{background:#fbfaf6;border-left:4px solid #c9c3b3;padding:10px 14px;border-radius:0 10px 10px 0;white-space:pre-wrap}
+.qa .better{background:#eef8f2;border-left:4px solid var(--ok);padding:10px 14px;border-radius:0 10px 10px 0;margin-top:10px;white-space:pre-wrap}
+.qa .lab{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-top:10px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chips span{background:var(--soft);color:var(--navy2);border-radius:999px;padding:3px 10px;font-size:13px;font-weight:600}
+.plan li{margin:6px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.err-msg{background:#fdecee;border:1px solid #f3b7c0;color:#8a1022;border-radius:12px;padding:12px 16px;margin-top:12px}
+.history{margin-top:10px;font-size:14px}.history div{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:6px 0}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:10px;font-size:14px;z-index:50}
+@media (max-width:760px){.stage{grid-template-columns:1fr}.examiner{position:static;display:flex;align-items:center;gap:14px;text-align:left;padding:12px}.avatar{width:60px;height:60px;margin:0}.avatar svg{width:44px}.wave{margin:0}.grid3{grid-template-columns:1fr}.scorehead{grid-template-columns:1fr}.cols{grid-template-columns:1fr}.crit4{grid-template-columns:1fr 1fr}.hero h1{font-size:30px}.topbar{flex-wrap:wrap;gap:8px}.clock .big{font-size:18px}}
+.micwarn{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#fdecee;border:1px solid #f3b7c0;color:#8a1022;border-radius:14px;padding:12px 16px;margin-bottom:16px;font-weight:600}
+.recind{font-size:12px;font-weight:800;letter-spacing:.5px}
+.recind.on{color:var(--red)}.recind.on:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:6px;animation:blink 1s infinite}
+.recind.wait{color:var(--muted)}
+.silence{height:4px;background:var(--soft);border-radius:4px;margin-top:8px;overflow:hidden}.silence i{display:block;height:100%;background:var(--warn);width:0}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">IELTS <b>Speaking</b> Mock</div>
+  <div class="partpill" id="partLbl">Not started</div>
+  <div class="spacer"></div>
+  <div class="clock"><span><small>Total</small><span id="tTotal">00:00</span></span><span class="big" id="tPhase">--:--</span></div>
+  <button class="endbtn hidden" id="endBtn">End test</button>
+  <div class="progress"><i id="prog"></i></div>
+</div>
+
+<div class="wrap">
+<!-- START -->
+<section id="vStart">
+  <div class="hero">
+    <div class="kick">IELTS Speaking Booster · Mock Test</div>
+    <h1>Practise IELTS Speaking like the real exam</h1>
+    <p>The examiner asks you questions. Answer them out loud. Your answers are saved as text. At the end, you get a full report on the four IELTS speaking criteria.</p>
+  </div>
+  <div class="grid3">
+    <div class="pcard"><div class="n">Part 1</div><h3>Interview · 4–5 minutes</h3><p>3 topics, 3 questions on each topic</p></div>
+    <div class="pcard"><div class="n">Part 2</div><h3>Long turn · 3–4 minutes</h3><p>One topic card: 1 minute to prepare, then speak for up to 2 minutes</p></div>
+    <div class="pcard"><div class="n">Part 3</div><h3>Discussion · 4–5 minutes</h3><p>7 questions about the Part 2 topic</p></div>
+  </div>
+  <div class="panel">
+    <h2>Before you start</h2>
+    <div class="row">
+      <div class="field"><label for="cName">Your full name</label><input type="text" id="cName" placeholder="For example: Aziza Karimova"></div>
+    </div>
+    <label class="check"><input type="checkbox" id="showQ" checked> Show the questions on the screen (in the real exam you only hear them)</label>
+    <input type="checkbox" id="typeMode" class="hidden" tabindex="-1" aria-hidden="true">
+    <div class="status"><span><i class="dot" id="dTts"></i> Examiner voice</span><span><i class="dot" id="dMic"></i> Speech to text</span><span><i class="dot" id="dAi"></i> <span id="dAiTxt">Feedback</span></span></div>
+    <div class="note">💡 <b>How it works:</b> You allow the microphone only once, at the start. Then just speak. You have <b>30 seconds</b> for each Part 1 question, <b>2 minutes</b> in Part 2 and <b>40 seconds</b> for each Part 3 question. When the time is up, the examiner asks the next question. Please use <b>headphones</b>, sit in a quiet room and use <b>Google Chrome</b>.</div>
+    <div class="panel" style="margin-top:14px;background:#fbfaf6">
+      <b>🎙 Microphone check</b> <span class="hint">— Click the button. If you see a question about the microphone, click ✓. Then say one or two sentences.</span>
+      <div class="controls" style="margin-top:8px"><button class="btn ghost" id="micTest">🎙 Check my microphone</button><span class="hint" id="micState">Status: —</span></div>
+      <div class="transcript" id="micOut" style="min-height:40px;font-size:15px"></div>
+    </div>
+    <div class="actions"><button class="btn primary" id="startBtn">▶ Start the test</button></div>
+  </div>
+  <a class="tg" href="https://t.me/OnlineIELTS_NA" target="_blank" rel="noopener"><svg width="38" height="38" viewBox="0 0 24 24" fill="#fff"><path d="M9.8 15.6l-.4 5.4c.6 0 .8-.2 1.1-.5l2.7-2.6 5.6 4.1c1 .6 1.7.3 2-.9l3.6-17c.4-1.5-.6-2.1-1.6-1.7L1.5 10.6c-1.4.6-1.4 1.4-.2 1.8l5.4 1.7L19.2 6.2c.6-.4 1.1-.2.7.2"/></svg><div><b>@OnlineIELTS_NA</b><span>Join our Telegram channel for more IELTS materials</span></div></a>
+</section>
+
+<!-- EXAM -->
+<section id="vExam" class="hidden">
+  <div class="micwarn hidden" id="micWarn"><span id="micWarnTxt">The microphone has stopped.</span><button class="btn primary" id="micAgain">🎙 Turn the microphone on again</button></div>
+  <div class="stage">
+    <div class="examiner" id="exBox">
+      <div class="avatar"><svg width="70" viewBox="0 0 64 64"><circle cx="32" cy="24" r="12" fill="#13233f"/><path d="M10 60c2-13 11-20 22-20s20 7 22 20z" fill="#13233f"/><path d="M20 22c0-9 6-14 12-14s12 5 12 14c-3-5-7-7-12-7s-9 2-12 7z" fill="#c8102e"/></svg></div>
+      <div><div class="nm">Sarah Mitchell</div><div class="rl">IELTS Examiner</div><div class="wave"><i></i><i></i><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="main">
+      <div class="bubble" id="bubble"><div class="who">Examiner</div><div id="bubbleBody"></div></div>
+      <div class="answerbox" id="ansBox">
+        <div class="lbl"><span id="ansLbl">Your answer</span><span><span id="micInd" class="recind"></span> <span id="ansMeta"></span></span></div>
+        <div class="transcript" id="trans"><span class="ph">Listen to the examiner…</span></div>
+        <textarea class="notes hidden" id="typeArea" placeholder="Type your answer here…"></textarea>
+        <div class="bar hidden" id="barWrap"><i id="barFill"></i></div>
+        <div class="controls" id="ctrls"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="vRes" class="hidden"></section>
+</div>
+<script>
+try{localStorage.removeItem('ielts_sp_hist')}catch(e){}
+const P1=[{"topic": "Work or Studies", "q": ["Do you work or are you a student?", "Why did you choose that job?", "Is there anything you dislike about your job?", "Do you like your job?"]}, {"topic": "House", "q": ["Where do you live?", "What do you like about your house?", "Is there anything you dislike about your house?", "Which room does your family spend most of the time in?", "What's your ideal home like?"]}, {"topic": "Hometown", "q": ["Where are you from?", "Do you like your hometown?", "Is it a big city or a small place?", "How long have you been living there?", "Do you think you will continue living there for a long time?", "Would you like to live in the countryside in the future?", "Have you ever lived in the countryside?", "What's the difference between living in the city and the countryside?", "What do people living in the countryside like to do?"]}, {"topic": "Street Markets", "q": ["Are street markets popular in your country?", "What do people usually buy at street markets?", "Do you prefer shopping at street markets or supermarkets?", "Do you think street markets are important?", "Do you enjoy bargaining when shopping?", "Are street markets different from the past?", "Would you like to run a stall at a street market?"]}, {"topic": "Travelling", "q": ["Do you like travelling?", "Where would you like to travel in the future?", "Do you prefer travelling alone or with others?", "What do you usually do when you travel?"]}, {"topic": "Collecting Things", "q": ["Do you collect anything?", "Did you collect anything when you were a child?", "Why do people collect things?", "Do you think collecting things is a good hobby?", "Why do some people collect expensive things?", "Is collecting things popular in your country?"]}, {"topic": "Computers and Tablets", "q": ["Do you often use a computer?", "What do you usually use your computer for?", "Do you prefer using a computer or a tablet?", "When did you first start using a computer?", "Do you think children should use computers at school?", "What would your life be like without computers?"]}, {"topic": "Shoes", "q": ["Do you like buying shoes?", "How often do you buy shoes?", "What kind of shoes do you usually wear?", "Do you prefer comfortable shoes or fashionable shoes?", "Have you ever bought shoes online?", "Do you spend a lot of money on shoes?", "Do you think people's shoes reflect their personality?"]}, {"topic": "Recycling and Rubbish", "q": ["Do you recycle things?", "What kinds of things do you recycle?", "Do you think recycling is important?", "Is recycling common in your country?", "What do you do with things you no longer need?"]}, {"topic": "Politeness", "q": ["Do you think it is important to be polite?", "Who taught you to be polite?", "Are people more polite now than in the past?"]}, {"topic": "Names", "q": ["Does your name have any special meaning?", "Do you like your name?", "How do parents choose names for their children in your country?", "Are there any names that are particularly popular in your country?"]}, {"topic": "Being Bored", "q": ["Do you get bored easily?", "What do you do when you feel bored?", "What kinds of things make you feel bored?", "Do you think being bored is a good thing?", "Do you feel bored when you have to wait?", "What did you do when you were bored as a child?"]}, {"topic": "Arts", "q": ["Do you like art?", "Do you like modern art or traditional art?", "Have you ever visited an art gallery?", "Do you think it would be interesting for you to be an artist?"]}, {"topic": "Birthdays", "q": ["What do you usually do on your birthday?", "What did you do on your birthday when you were young?", "How did you celebrate your last birthday?", "How do children celebrate birthdays in your country?", "Is it important for you to celebrate your birthday?"]}, {"topic": "Apps", "q": ["What apps have you used recently?", "What apps would you like to use in the future?", "How much time do you spend on these apps?"]}, {"topic": "Weather", "q": ["What's the weather like where you live?", "What kind of weather do you like most?", "Does the weather ever affect your mood?", "Do you check the weather forecast every day?", "What do you usually do on rainy days?", "Has the weather in your country changed in recent years?"]}, {"topic": "Music", "q": ["Do you like listening to music?", "What kind of music do you usually listen to?", "When do you usually listen to music?", "Have you ever learned to play a musical instrument?", "Do you prefer listening to music alone or with other people?", "Has your taste in music changed since you were a child?"]}, {"topic": "Reading", "q": ["Do you like reading?", "What kind of books do you enjoy reading?", "Do you prefer paper books or e-books?", "When do you usually find time to read?", "Did you read a lot when you were a child?", "Is there a book you would like to read again?"]}, {"topic": "Sport and Exercise", "q": ["Do you play any sports?", "How often do you do exercise?", "What sports are popular in your country?", "Did you do any sports at school?", "Do you prefer exercising indoors or outdoors?", "Do you like watching sports on TV?"]}, {"topic": "Food and Cooking", "q": ["What kind of food do you like?", "Do you know how to cook?", "Who usually cooks in your family?", "Do you prefer eating at home or eating out?", "Is there any food you didn't like as a child but like now?", "What is a traditional dish from your country?"]}, {"topic": "Shopping", "q": ["Do you like shopping?", "Do you prefer shopping online or in shops?", "How often do you go shopping?", "Who do you usually go shopping with?", "Have you ever bought something you didn't need?", "What was the last thing you bought?"]}, {"topic": "Friends", "q": ["Do you have a lot of friends?", "How often do you meet your friends?", "What do you usually do with your friends?", "Is it easy for you to make new friends?", "Do you prefer having a few close friends or many friends?", "Are your friends mostly from school or from other places?"]}, {"topic": "Weekends", "q": ["What do you usually do at weekends?", "Do you prefer busy weekends or relaxing weekends?", "What did you do last weekend?", "Do you ever study or work at weekends?", "Who do you usually spend your weekends with?", "Are your weekends different now from when you were a child?"]}, {"topic": "Mobile Phones", "q": ["How often do you use your mobile phone?", "What do you mainly use your phone for?", "Do you think you spend too much time on your phone?", "When did you get your first mobile phone?", "Would you like to buy a new phone in the future?", "Could you live without your phone for a week?"]}, {"topic": "Daily Routine", "q": ["What is your daily routine like?", "Are you a morning person or an evening person?", "What is the busiest part of your day?", "Has your daily routine changed recently?", "Do you like having a routine, or do you prefer to be flexible?", "What would you like to change about your daily routine?"]}, {"topic": "Films", "q": ["Do you like watching films?", "What kind of films do you enjoy?", "Do you prefer watching films at home or at the cinema?", "Who do you usually watch films with?", "Is there a film you have watched more than once?", "Did you watch many films when you were younger?"]}, {"topic": "Transport", "q": ["How do you usually travel to work or school?", "What kind of public transport is there in your city?", "Do you prefer travelling by bus or by car?", "Is traffic a problem where you live?", "Have you ever travelled by train?", "How will transport change in your city in the future?"]}];
+const CARDS=[{"title": "Describe a city you have visited and would like to visit again", "bullets": ["where the city is", "when you went there", "what you did there", "and explain why you would like to visit it again"], "p3topic": "Travel & Tourism", "p3": ["Why do some people like visiting the same place more than once?", "What are the benefits of tourism for a city?", "Do you think too many tourists can be a problem?", "How has travelling changed over the last few decades?", "What kinds of places are most popular with tourists in your country?", "Do you think tourism can damage the environment?", "How might tourism change in the future?"]}, {"title": "Describe a gift you would like to buy for someone", "bullets": ["what the gift is", "who you would like to buy it for", "why you would choose this gift", "and explain how you think the person would feel about it"], "p3topic": "Exchanging Gifts", "p3": ["Why do people give gifts to each other?", "Do you think the price of a gift matters?", "Is it better to give money or a physical present?", "Do you think people receive too many gifts nowadays?", "What kinds of gifts are popular in your country?", "Do you think homemade gifts are better than bought ones?", "How have gift-giving customs changed in recent years?"]}, {"title": "Describe a person you have met and would like to know more about", "bullets": ["who this person is", "when and where you met this person", "what you talked about", "and explain why you would like to know more about this person"], "p3topic": "Meeting People & Friendships", "p3": ["What qualities make a person interesting to talk to?", "Do you think it's easy to make friends as an adult?", "Why are some people more sociable than others?", "Can meeting famous people change someone's life?", "Where do people usually meet new friends nowadays?", "Do you think social media helps people make real friendships?", "Why do some people find it difficult to talk to strangers?"]}, {"title": "Describe a course that impressed you", "bullets": ["what the course was", "when and where you took it", "what you learned from it", "and explain why it impressed you"], "p3topic": "Education & Lifelong Learning", "p3": ["Why do people take courses outside of school or university?", "Do you think online courses are as good as classroom ones?", "What makes a good teacher?", "Should people keep learning throughout their lives?", "What skills do adults most often want to learn?", "Should employers pay for their workers' training courses?", "How might education change in the next twenty years?"]}, {"title": "Describe a noisy place you have been to", "bullets": ["where this place was", "when you went there", "what made it noisy", "and explain how you felt about the noise"], "p3topic": "Noise Pollution & Urban Life", "p3": ["Why are cities generally noisier than villages?", "What are the effects of noise pollution on people?", "What can governments do to reduce noise in cities?", "Do you think some people enjoy noisy places?", "Do you think people are more sensitive to noise than in the past?", "Should there be laws to control noise in residential areas?", "What kinds of jobs expose people to a lot of noise?"]}, {"title": "Describe a time when you received good service in a shop", "bullets": ["what shop it was", "when you went there", "what kind of service you received", "and explain why you think it was good service"], "p3topic": "Customer Service & Business", "p3": ["Why is customer service important for businesses?", "What makes someone good at customer service?", "Do you think service is better in small shops or big stores?", "Is online customer service as good as face-to-face?", "What problems do customers often have with shops nowadays?", "Do you think online reviews are reliable?", "How will shopping change in the future?"]}, {"title": "Describe something you saved money to buy", "bullets": ["what you bought", "how long it took you to save the money", "how you saved the money", "and explain why you wanted to buy it"], "p3topic": "Money Management & Savings", "p3": ["Do you think it's important for young people to save money?", "Why do some people find it hard to save?", "Is it better to spend money on experiences or on things?", "Should schools teach children about money management?", "What do young people in your country usually spend their money on?", "Do you think advertising makes people buy things they don't need?", "Is it a good idea to borrow money to buy things?"]}, {"title": "Describe a skill you learned when you were a child", "bullets": ["what the skill was", "when you learned it", "who taught you this skill", "and explain how this skill has been useful to you"], "p3topic": "Childhood Skills & Development", "p3": ["What skills should children learn at an early age?", "Who is better at teaching children, parents or teachers?", "Do you think children today learn practical skills as much as before?", "Which is more important, learning practical skills or academic subjects?", "Do you think children have too many after-school activities nowadays?", "How has technology changed the way children learn new skills?", "Should children be allowed to choose which skills they learn?"]}, {"title": "Describe a crowded place you have been to", "bullets": ["where this place was", "when you went there", "why there were so many people there", "and explain how you felt about being there"], "p3topic": "Crowded Places & Overpopulation", "p3": ["Why do people go to crowded places?", "How can crowds be managed safely?", "Do you think big cities are too crowded?", "Why do some people dislike crowds?", "What are the disadvantages of living in a crowded city?", "How can governments encourage people to live outside big cities?", "Do you think public transport is too crowded nowadays?"]}, {"title": "Describe a time when you wasted your time", "bullets": ["when it happened", "what you were doing", "why you wasted your time", "and explain how you felt about it afterwards"], "p3topic": "Time Management & Distractions", "p3": ["Why do people waste time?", "Do you think technology makes people waste more time?", "How can people manage their time better?", "Is it always bad to waste time?", "Do young people waste more time than older people?", "Should schools teach students how to manage their time?", "What activities do you think are a waste of time?"]}, {"title": "Describe a movie you did not like", "bullets": ["what the movie was", "when and where you watched it", "what it was about", "and explain why you did not like it"], "p3topic": "Cinema & Film Industry", "p3": ["Why do people watch films?", "Do you think films can influence people's opinions?", "Do you prefer watching films at the cinema or at home?", "Should there be age limits on films?", "What kinds of films are popular in your country?", "Do you think the cinema will disappear in the future?", "Why are films based on true stories so popular?"]}, {"title": "Describe a trip that you often take", "bullets": ["where you go", "how often you take this trip", "who you usually go with", "and explain why you often take this trip"], "p3topic": "Commuting & Future Transport", "p3": ["Why do people travel regularly for work or study?", "What are the advantages and disadvantages of long journeys?", "Which is better for long distances, trains or planes?", "How might transport change in the future?", "What are the main transport problems in big cities?", "Should governments invest more in public transport than in roads?", "Do you think people will work from home more in the future to avoid commuting?"]}, {"title": "Describe a person who taught you an important skill", "bullets": ["who this person is", "what skill this person taught you", "how this person taught you the skill", "and explain why this skill is important to you"], "p3topic": "Teaching & Mentorship", "p3": ["Who are the best people to teach children new skills?", "Is it better to learn skills from a person or from videos online?", "What skills do you think are the most useful in daily life?", "Do older people have anything to teach young people?", "What qualities does a good mentor need?", "Do you think young people today are willing to learn from others?", "Can people learn important skills without a teacher?"]}, {"title": "Describe an old person you admire", "bullets": ["who this person is", "how you know this person", "what this person is like", "and explain why you admire this person"], "p3topic": "Elderly People & Society", "p3": ["How are older people treated in your country?", "What can young people learn from the elderly?", "Do you think older people should keep working after retirement?", "What problems do elderly people face in modern society?", "Should families look after their elderly relatives at home?", "How can technology help older people?", "Do you think people will retire later in the future?"]}, {"title": "Describe a person who is good at making things by hand", "bullets": ["who this person is", "what this person makes", "how this person learned to make these things", "and explain how you feel about the things this person makes"], "p3topic": "Handicrafts & Traditional Skills", "p3": ["Why are handmade products often more expensive?", "Do you think traditional crafts will disappear in the future?", "Should schools teach children handicrafts?", "Why do some people prefer handmade gifts?", "Do you think handmade products are better quality than factory-made ones?", "How can traditional crafts be protected?", "Why are young people less interested in learning traditional crafts?"]}, {"title": "Describe an enjoyable evening you spent with your friends", "bullets": ["when and where it was", "who you were with", "what you did together", "and explain why it was enjoyable"], "p3topic": "Friendship & Socializing", "p3": ["Why is it important to spend time with friends?", "Do people spend less time with friends than in the past?", "What do young people and older people like to do with friends?", "Is it better to have a few close friends or lots of friends?", "How has technology changed the way people socialise?", "Do you think online friends can be as close as real-life friends?", "Why do some people prefer to spend time alone?"]}, {"title": "Describe a sportsperson you admire", "bullets": ["who this person is", "what sport he or she plays", "how you know about this person", "and explain why you admire him or her"], "p3topic": "Sports & Role Models", "p3": ["Why do some sports stars earn so much money?", "Do you think sports stars are good role models for kids?", "Why is it important for children to play sports?", "Do you think chess and other mind games should be considered sports?", "What sports are most popular in your country?", "Should the government spend more money on sports facilities?", "Do you think watching sports on TV is as enjoyable as watching them live?"]}, {"title": "Describe a famous person in your country", "bullets": ["who this person is", "what this person is famous for", "how you know about this person", "and explain how you feel about this person"], "p3topic": "Fame & Celebrity Culture", "p3": ["Why do people become famous nowadays?", "What are the disadvantages of being famous?", "Do famous people have a responsibility to set a good example?", "Why do people like to follow the lives of celebrities?", "Do you think famous people deserve their high salaries?", "How has social media changed the nature of fame?", "Would you like to be famous?"]}, {"title": "Describe a time when you lost something important", "bullets": ["what you lost", "when and where you lost it", "what you did to find it", "and explain why it was important to you"], "p3topic": "Losing Possessions & Responsibility", "p3": ["Why do people lose things?", "What can people do to avoid losing important things?", "Do you think people are more forgetful nowadays?", "What should people do if they find something that belongs to someone else?", "Do you think people care less about their possessions nowadays?", "Should people be rewarded for returning lost items?", "How can technology help people find lost things?"]}, {"title": "Describe something you do that helps you save time", "bullets": ["what it is", "when you started doing it", "how it helps you save time", "and explain how you feel about it"], "p3topic": "Efficiency & Daily Routines", "p3": ["Why is time management important?", "Do you think people today are busier than in the past?", "What are some good ways of saving time?", "Do you think getting up early is a good habit?", "What technology helps people save the most time?", "Do you think people today have less free time than before?", "Is it better to do one thing at a time or several things at once?"]}, {"title": "Describe something you were not interested in before but are interested in", "bullets": ["what it is", "why you were not interested in it before", "what made you become interested in it", "and explain how you feel about it now"], "p3topic": "Changing Interests & Hobbies", "p3": ["Why do people's interests change as they get older?", "How can parents help children develop interests?", "Do you think it's good to have many hobbies?", "Is it hard for people to try something new as adults?", "Do you think children should be pushed to try new activities?", "How do friends influence a person's interests?", "Is it better to be very good at one hobby or average at many?"]}, {"title": "Describe a book that made you happy", "bullets": ["what the book is", "when you read it", "what it is about", "and explain why it made you happy"], "p3topic": "Reading & Literature", "p3": ["Do you think people read less than they used to?", "What are the benefits of reading books?", "Do you prefer paper books or e-books?", "Should children be encouraged to read more?", "What kinds of books are popular in your country?", "Do you think libraries are still important nowadays?", "How can parents encourage children to read?"]}, {"title": "Describe a time when you helped someone", "bullets": ["who you helped", "when and where it happened", "how you helped this person", "and explain how you felt about helping"], "p3topic": "Helping Others & Community", "p3": ["Why do people help each other?", "Do you think people are less willing to help strangers nowadays?", "Is it important to teach children to help others?", "What kinds of jobs involve helping people?", "Should volunteering be compulsory for students?", "How can governments encourage people to help their communities?", "Do you think rich people have a responsibility to help others?"]}, {"title": "Describe a happy person you know", "bullets": ["who this person is", "how you know this person", "what this person usually does", "and explain why you think this person is happy"], "p3topic": "Happiness & Well-being", "p3": ["What makes people happy?", "Does money bring happiness?", "Are people happier today than in the past?", "How can a workplace make employees happier?", "Do you think happiness depends on personality or circumstances?", "Can social media make people unhappy?", "Are children generally happier than adults?"]}, {"title": "Describe a person who has healthy habits", "bullets": ["who this person is", "how you know this person", "what healthy habits this person has", "and explain how these habits affect you"], "p3topic": "Health & Healthy Lifestyles", "p3": ["What can people do to stay healthy?", "Why do some people find it hard to keep healthy habits?", "Do you think governments should do more to encourage healthy lifestyles?", "Are people healthier now than in the past?", "Do you think fast food should be more expensive?", "How can schools encourage children to have healthy habits?", "Is it the individual's responsibility to stay healthy?"]}, {"title": "Describe a person who is very organised", "bullets": ["who this person is", "how you know this person", "how this person organises things", "and explain what you think of this person"], "p3topic": "Organization & Productivity", "p3": ["Why are some people more organised than others?", "Is being organised important at work?", "Can technology help people be more organised?", "Do you think being too organised can be a bad thing?", "Do you think organisation is a skill people are born with or can learn?", "Should children be taught to be organised at school?", "How does being disorganised affect people's lives?"]}, {"title": "Describe a person who loves history", "bullets": ["who this person is", "how you know this person", "why this person loves history", "and explain how you feel about this person"], "p3topic": "History & Heritage", "p3": ["Why is it important to learn about history?", "Do you think history is taught well in schools?", "How can people learn about history outside school?", "Do you think old buildings should be preserved?", "What can we learn from history?", "Do you think young people are interested in history?", "How will people in the future remember our time?"]}, {"title": "Describe a party that you enjoyed", "bullets": ["whose party it was", "when and where it was held", "what happened at the party", "and explain why you enjoyed it"], "p3topic": "Parties & Celebrations", "p3": ["Why do people hold parties?", "How have parties changed over the years?", "Do you think people spend too much money on celebrations?", "What are the differences between traditional and modern celebrations?", "What kinds of celebrations are most important in your country?", "Do you think people should have big weddings?", "Why do some people prefer small celebrations?"]}, {"title": "Describe a public building you enjoy visiting", "bullets": ["what the building is", "where it is", "what you do there", "and explain why you enjoy visiting it"], "p3topic": "Public Buildings & Architecture", "p3": ["Why are public buildings important for a community?", "Should the government spend money on building new public buildings?", "Do you think modern architecture is better than traditional?", "How can museums attract more visitors?", "What kinds of public buildings are most needed in cities?", "Should public buildings be designed to be beautiful or just practical?", "Do you think libraries will still exist in the future?"]}, {"title": "Describe a person who likes taking photos", "bullets": ["who this person is", "how you know this person", "what kind of photos this person takes", "and explain why this person likes taking photos"], "p3topic": "Photography & Visual Memories", "p3": ["Why do people take so many photos nowadays?", "Do you think people take too many photos?", "Are printed photos still important?", "How has photography changed society?", "Do you think photos can show the truth?", "Should people ask permission before taking photos of others?", "Why do people like to share photos on social media?"]}, {"title": "Describe a natural place in your city", "bullets": ["where it is", "what it looks like", "what people do there", "and explain why you like this place"], "p3topic": "Nature & Green Spaces", "p3": ["Why is it important to have green spaces in cities?", "What can be done to protect natural places?", "Do you think people spend enough time in nature nowadays?", "Should entry to natural places like parks and gardens be free?", "Why do people like to live near parks or natural places?", "Should cities build more parks instead of buildings?", "How can parents encourage children to spend more time in nature?"]}, {"title": "Describe a famous person you would like to see being interviewed", "bullets": ["who this person is", "what this person is famous for", "what you would like to hear in the interview", "and explain why you would like to see this person interviewed"], "p3topic": "Interviews & Modern Media", "p3": ["Why do people enjoy watching interviews with famous people?", "What makes a good interviewer?", "Do you think celebrities should have to answer personal questions?", "Why are podcasts so popular these days?", "Do you think interviews show the true personality of famous people?", "How have interviews changed with social media?", "Should interviews with politicians be more challenging?"]}, {"title": "Describe a place you would like to visit in your free time", "bullets": ["where the place is", "how you know about this place", "what you would do there", "and explain why you would like to visit it in your free time"], "p3topic": "Free Time & Outdoor Leisure", "p3": ["How do people in your country usually spend their free time?", "Do you think people have enough free time nowadays?", "What are the benefits of spending free time outdoors?", "Should employers give workers more free time?", "Do you think indoor or outdoor activities are better for children?", "How has technology changed the way people spend their free time?", "Should cities provide more free activities for young people?"]}, {"title": "Describe a special cake you received from others", "bullets": ["what the cake was like", "who gave it to you", "when you received it", "and explain why it was special to you"], "p3topic": "Food Traditions & Nutrition", "p3": ["Why do people eat cake on special occasions?", "Do you think people eat too much sugar nowadays?", "Is baking at home better than buying cakes from shops?", "How have eating habits changed in recent years?", "What foods are traditional for special occasions in your country?", "Should schools teach children how to cook?", "Do you think traditional food will become less popular in the future?"]}, {"title": "Describe someone who is good at protecting the environment", "bullets": ["who this person is", "how you know this person", "what this person does to protect the environment", "and explain how you feel about what this person does"], "p3topic": "Environmental Protection", "p3": ["What are the biggest environmental problems today?", "Whose responsibility is it to protect the environment, individuals or governments?", "Do you think people in your country care about the environment?", "What can schools do to teach children about the environment?", "Do you think individuals can make a difference to the environment?", "Should companies be punished for polluting the environment?", "How can people be encouraged to use less plastic?"]}];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=ms=>{ms=Math.max(0,ms);const s=Math.round(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const pick=(a,n)=>{const c=[...a];for(let i=c.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[c[i],c[j]]=[c[j],c[i]]}return c.slice(0,n)};
+const ACK=['Thank you.','Right.','Okay.','I see.','Thank you.'];
+const ack=()=>ACK[Math.floor(Math.random()*ACK.length)]+' ';
+const wc=s=>(String(s).trim().match(/\b[\w'’-]+\b/g)||[]).length;
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3500)}
+
+/* timing rules (ms) */
+const RULE={0:{limit:20000},1:{limit:30000},2:{limit:120000},3:{limit:40000}};
+
+/* ---------- Chrome speech fallback (when opened outside claude.ai) ---------- */
+let MIC_STREAM=null,micTried=false;
+function holdMic(){ // keep one microphone stream open, so the browser does not ask for permission again on every restart
+  if(micTried||/Android/i.test(navigator.userAgent)||!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia))return;
+  micTried=true;
+  navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{MIC_STREAM=s}).catch(()=>{MIC_STREAM=null});
+}
+function releaseMic(){try{MIC_STREAM&&MIC_STREAM.getTracks().forEach(t=>t.stop())}catch(e){}MIC_STREAM=null;micTried=false}
+function makeSR(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;
+  const H={};let rec=null,keep=false,state='idle',startRes=null,startRej=null,fails=0,timer=null;
+  const setState=(s,r)=>{if(state===s&&s!=='idle')return;state=s;H.s&&H.s({state:s,reason:r})};
+  function restart(){
+    clearTimeout(timer);
+    timer=setTimeout(()=>{if(!keep)return;try{make();rec.start()}catch(e){fails++;if(fails>6){keep=false;setState('idle','error')}else restart()}},Math.min(250*(fails+1),2000));
+  }
+  function make(){
+    if(rec){rec.onstart=rec.onresult=rec.onerror=rec.onend=null;try{rec.abort()}catch(e){}}
+    rec=new SR();rec.lang='en-GB';rec.continuous=true;rec.interimResults=true;
+    rec.onstart=()=>{fails=0;setState('listening');holdMic();if(startRes){startRes();startRes=startRej=null}};
+    rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal){H.f&&H.f({text:r[0].transcript})}else interim+=r[0].transcript}if(interim)H.p&&H.p({text:interim})};
+    rec.onerror=e=>{const c=e.error==='not-allowed'||e.error==='service-not-allowed'?'not_granted':e.error==='audio-capture'?'NotFoundError':e.error;
+      if(c!=='not_granted'&&c!=='NotFoundError')return;            // no-speech, network, aborted: onend restarts quietly
+      if(startRej){keep=false;startRej({code:c});startRes=startRej=null;return}
+      fails++;if(fails>3){keep=false;setState('idle',c)}};      // during an automatic restart: try again a few times first
+    rec.onend=()=>{if(keep)restart();else setState('idle','stopped')};
+  }
+  return {fallback:true,
+    start(){return new Promise((res,rej)=>{if(state==='listening'&&keep){res();return}keep=true;fails=0;startRes=res;startRej=rej;make();try{rec.start()}catch(e){if(state==='listening')res();else{keep=false;startRes=startRej=null;rej({code:'error',message:e.message})}}})},
+    stop(){keep=false;clearTimeout(timer);try{rec&&rec.stop()}catch(e){}return new Promise(r=>setTimeout(r,400))},
+    onPartial:f=>H.p=f,onFinal:f=>H.f=f,onState:f=>H.s=f};
+}
+
+/* ---------- capabilities ---------- */
+let TTS=null,DIC=null,SAMPLE=null,DL=null;
+let listening=false,micTesting=false,micFinal='';
+(async()=>{
+  const use=n=>window.claude?.use?window.claude.use(n).catch(()=>null):Promise.resolve(null);
+  [TTS,DIC,SAMPLE,DL]=await Promise.all([use('tts'),use('dictation'),use('sample'),use('downloads')]);
+  if(!DIC)DIC=makeSR();
+  $('#dTts').className='dot '+(TTS||window.speechSynthesis?'on':'off');
+  $('#dMic').className='dot '+(DIC?'on':'off');
+  $('#dAi').className='dot '+(SAMPLE?'on':'warn');
+  if(!SAMPLE)$('#dAiTxt').textContent='Feedback: copy your answers to Claude at the end';
+  if(!DIC)$('#typeMode').checked=true;
+  if(TTS)TTS.onState(({state})=>$('#exBox').classList.toggle('talking',state==='speaking'));
+  if(DIC){
+    DIC.onPartial(({text})=>onHeard(text,true));
+    DIC.onFinal(({text})=>onHeard(text,false));
+    DIC.onState(({state,reason})=>{
+      listening=state==='listening';
+      if(micTesting){$('#micState').textContent='Status: '+(listening?'🔴 Listening — please speak':state==='idle'?'Stopped'+(reason?' ('+reason+')':''):state);if(state==='idle'){micTesting=false;$('#micTest').textContent='🎙 Check my microphone'}return}
+      if(listening){autoTries=0;$('#micWarn').classList.add('hidden')}
+      updInd();
+      if(T&&!T.done&&!T.endingMic&&state==='idle'){autoRestartMic(reason)}
+    });
+  }
+})();
+
+
+/* ---------- mic check ---------- */
+function micErr(e){const c=e&&(e.code||e.name)||'error';const m={not_granted:'You did not allow the microphone. Reload the page and click ✓ next time.',dismissed:'The question about the microphone was closed. Click again and choose ✓.',busy:'Please wait a second and click again.',NotFoundError:'No microphone was found. Check Windows: Settings → Sound → Input.'};return m[c]||('Error: '+c+(e&&e.message?' — '+e.message:''))}
+$('#micTest').onclick=()=>{
+  const b=$('#micTest');
+  if(!DIC){$('#micState').textContent='Status: speech to text does not work in this browser. Please open this page in Google Chrome.';return}
+  if(micTesting){micTesting=false;DIC.stop().catch(()=>{});return}
+  micTesting=true;micFinal='';$('#micOut').innerHTML='';$('#micState').textContent='Status: starting…';b.textContent='⏹ Stop';
+  let p;try{p=DIC.start()}catch(e){p=Promise.reject(e)}
+  p.catch(e=>{micTesting=false;b.textContent='🎙 Check my microphone';$('#micState').textContent='Status: '+micErr(e)});
+};
+
+/* ---------- examiner voice ---------- */
+let speaking=false,bestVoice=null,localVoice=null,UTTS=[],speakGen=0;
+function pickVoice(){try{const v=speechSynthesis.getVoices().filter(x=>/^en/i.test(x.lang));
+  bestVoice=v.find(x=>/Google UK English Female/i.test(x.name))||v.find(x=>/en-GB/i.test(x.lang)&&/female|Libby|Sonia|Hazel|Susan|Serena|Kate/i.test(x.name))||v.find(x=>/en-GB/i.test(x.lang))||v[0]||null;
+  localVoice=v.find(x=>x.localService&&/en-GB/i.test(x.lang))||v.find(x=>x.localService)||null}catch(e){}}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const chunks=t=>(String(t).match(/[^.!?]+[.!?]*\s*/g)||[String(t)]).map(s=>s.trim()).filter(Boolean);
+/* one sentence at a time: long texts are cut off by Chrome, and a sentence that never starts is spoken again */
+function sayOne(text,voice){return new Promise(res=>{
+  let started=false,done=false,ka,st,to;
+  const fin=ok=>{if(done)return;done=true;clearInterval(ka);clearTimeout(st);clearTimeout(to);res(ok)};
+  try{
+    const u=new SpeechSynthesisUtterance(text);UTTS.push(u);if(UTTS.length>30)UTTS.shift();   // keep a reference, or Chrome may drop it
+    if(voice){u.voice=voice;u.lang=voice.lang}else u.lang='en-GB';u.rate=.95;
+    u.onstart=()=>{started=true};u.onend=()=>fin(true);
+    u.onerror=e=>fin(!!(e&&(e.error==='interrupted'||e.error==='canceled')));
+    ka=setInterval(()=>{try{if(speechSynthesis.paused)speechSynthesis.resume()}catch(e){}},800);
+    st=setTimeout(()=>{if(!started)fin(false)},3000);
+    to=setTimeout(()=>fin(true),text.length*95+5000);
+    speechSynthesis.resume();speechSynthesis.speak(u);
+  }catch(e){fin(false)}
+})}
+async function synth(text){
+  const gen=++speakGen;
+  try{if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();await wait(150)}}catch(e){}
+  if(!bestVoice)pickVoice();
+  for(const c of chunks(text)){
+    if(gen!==speakGen)return;
+    let ok=await sayOne(c,bestVoice);
+    if(!ok&&gen===speakGen){
+      try{speechSynthesis.cancel()}catch(e){}await wait(200);
+      const alt=localVoice||bestVoice;ok=await sayOne(c,alt);
+      if(ok&&alt!==bestVoice)bestVoice=alt;            // the online voice failed: use the computer's own voice from now on
+    }
+  }
+}
+async function speak(text){
+  speaking=true;$('#exBox').classList.add('talking');updInd();
+  try{
+    if(listening||!TTS){ if(window.speechSynthesis)await synth(text); else await new Promise(r=>setTimeout(r,text.length*55)); }
+    else await TTS.speak(text,{voice:'rounded',language:'en',rate:0.95}).catch(()=>window.speechSynthesis?synth(text):null);
+  }finally{speaking=false;$('#exBox').classList.remove('talking');T&&(T.ignoreUntil=Date.now()+700);updInd()}
+}
+function stopSpeak(){speakGen++;try{TTS&&TTS.stop()}catch(e){}try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
+
+/* ---------- test data ---------- */
+let T=null,cur=null,mode='idle',phase={start:0};
+function greet(){const h=new Date().getHours();return h<12?'morning':h<18?'afternoon':'evening'}
+function buildTest(){
+  const core=['Work or Studies','House','Hometown'];
+  const LS=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}};
+  const SS=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+  const fresh=(list,used,n)=>{let f=list.filter(x=>!used.includes(x));if(f.length<n)f=list.filter(x=>!used.slice(0,Math.max(0,list.length-n*2)).includes(x));if(f.length<n)f=list;return pick(f,n)};
+  const usedCore=LS('ielts_p1_core'),usedTop=LS('ielts_p1_topics'),usedQ=LS('ielts_p1_qs');
+  const coreT=P1.filter(t=>core.includes(t.topic)),otherT=P1.filter(t=>!core.includes(t.topic));
+  const firstName=fresh(coreT.map(t=>t.topic),usedCore,1)[0];
+  const first=coreT.find(t=>t.topic===firstName);
+  const others=fresh(otherT.map(t=>t.topic),usedTop,2).map(n=>otherT.find(t=>t.topic===n));
+  SS('ielts_p1_core',[firstName,...usedCore].slice(0,coreT.length-1));
+  SS('ielts_p1_topics',[...others.map(t=>t.topic),...usedTop].slice(0,otherT.length-2));
+  const topics=[first,...others];const steps=[];
+  steps.push({id:'INTRO',part:0,graded:false,lead:"Good "+greet()+". My name is Sarah Mitchell, and I'll be your examiner today.",text:"Can you tell me your full name, please?"});
+  topics.forEach((t,ti)=>{
+    const uq=LS('ielts_p1_qs');let pool=t.q.filter(q=>!uq.includes(q));if(pool.length<3)pool=t.q;
+    const qs=core.includes(t.topic)?[t.q[0],...pick(pool.filter(q=>q!==t.q[0]).length>=2?pool.filter(q=>q!==t.q[0]):t.q.slice(1),2).sort((a,b)=>t.q.indexOf(a)-t.q.indexOf(b))]:pick(pool,3).sort((a,b)=>t.q.indexOf(a)-t.q.indexOf(b));
+    SS('ielts_p1_qs',[...qs,...uq].slice(0,150));
+    qs.forEach((q,qi)=>{
+      let lead=ack();
+      if(ti===0&&qi===0)lead="Thank you. Now, in this first part, I'd like to ask you some questions about yourself. Let's talk about "+t.topic.toLowerCase()+".";
+      else if(qi===0)lead=ack()+"Now let's move on to talk about "+t.topic.toLowerCase()+".";
+      steps.push({id:'P1-'+(ti*3+qi+1),part:1,topic:t.topic,lead,text:q,graded:true});
+    });
+  });
+  const card=CARDS[Math.floor(Math.random()*CARDS.length)];
+  steps.push({id:'P2',part:2,card,text:card.title,graded:true});
+  const subj=card.title.replace(/^Describe\s+/i,'').replace(/^(a|an|the)\s+/i,'');
+  card.p3.forEach((q,i)=>{
+    const lead=i===0?"We've been talking about "+subj+", and I'd like to discuss with you one or two more general questions related to this. Let's consider "+card.p3topic.replace('&','and').toLowerCase()+".":ack();
+    steps.push({id:'P3-'+(i+1),part:3,topic:card.p3topic,lead,text:q,graded:true});
+  });
+  return {name:$('#cName').value.trim()||'Candidate',card,steps,answers:{},i:-1,t0:Date.now(),notes:'',ignoreUntil:0};
+}
+const typing=()=>$('#typeMode').checked||!DIC;
+
+/* ---------- hearing ---------- */
+let echoPhrase=false;
+function onHeard(text,partial){
+  if(micTesting){const o=$('#micOut');if(!partial)micFinal+=(micFinal?' ':'')+text;o.innerHTML=esc(micFinal)+(partial?' <span class="partial">'+esc(text)+'</span>':'');return}
+  if(!T||T.done)return;
+  const now=Date.now();
+  if(mode!=='answer'||speaking||now<T.ignoreUntil){echoPhrase=!!partial;return}   // examiner's voice / prep time
+  if(echoPhrase){ if(partial)return; echoPhrase=false; return }               // drop the phrase that began during examiner speech
+  if(!text||!text.trim())return;
+  cur.lastAct=now;cur.spoke=true;
+  if(partial)cur.partial=text;else{cur.finals.push(text.trim());cur.partial=''}
+  renderTrans();
+}
+function updInd(){
+  const el=$('#micInd');if(!el)return;
+  if(typing()){el.className='recind';el.textContent='';return}
+  if(mode==='answer'&&listening&&!speaking){el.className='recind on';el.textContent='RECORDING'}
+  else if(listening){el.className='recind wait';el.textContent='Microphone on'}
+  else{el.className='recind wait';el.textContent='Microphone off'}
+}
+let autoTries=0;
+function autoRestartMic(reason){   // turn the microphone back on by itself; ask the student only if that fails
+  if(reason==='not_granted'||autoTries>=3){showMicWarn(reason);return}
+  autoTries++;
+  setTimeout(()=>{if(!T||T.done||listening)return;let p;try{p=DIC.start()}catch(e){p=Promise.reject(e)}p.catch(()=>showMicWarn(reason))},500*autoTries);
+}
+function showMicWarn(reason){
+  $('#micWarnTxt').textContent='The microphone has stopped'+(reason&&reason!=='stopped'?' ('+reason+')':'')+'. Click the button to continue.';
+  $('#micWarn').classList.remove('hidden');
+}
+$('#micAgain').onclick=()=>{
+  let p;try{p=DIC.start()}catch(e){p=Promise.reject(e)}
+  $('#micWarn').classList.add('hidden');
+  if(cur){cur.lastAct=Date.now()}
+  p.catch(e=>{$('#micWarnTxt').textContent=micErr(e);$('#micWarn').classList.remove('hidden');if(e&&e.code==='not_granted'){$('#typeMode').checked=true;$('#micWarn').classList.add('hidden');if(mode==='answer')beginAnswerUI()}});
+};
+
+/* ---------- timers & auto-advance ---------- */
+let lastTick=0;
+setInterval(()=>{
+  if(!T||T.done)return;
+  const now=Date.now();
+  const dt=now-(lastTick||now);lastTick=now;
+  if(mode==='answer'&&!typing()&&!listening&&phase.start){phase.start+=dt;if(cur&&cur.t0)cur.t0+=dt}   // microphone off: pause the clock
+  $('#tTotal').textContent=fmt(now-T.t0);
+  const el=$('#tPhase');el.className='big';
+  if(phase.start){
+    const e=now-phase.start;
+    if(phase.limit){const left=phase.limit-e;el.textContent=fmt(left);if(left<15000)el.classList.add('danger');else if(left<30000)el.classList.add('warn');$('#barFill').style.width=Math.min(100,e/phase.limit*100)+'%';
+      if(left<=0&&phase.onEnd){const f=phase.onEnd;phase.onEnd=null;f()}}
+    else el.textContent=fmt(e);
+  }else el.textContent='--:--';
+  if(mode==='answer'&&cur&&!typing()){
+    $('#ansMeta').textContent=fmt(now-cur.t0)+' · '+wc(answerText())+' words';
+  }
+},200);
+
+/* ---------- flow ---------- */
+$('#startBtn').onclick=()=>{
+  // start the microphone straight from this click (needed by the browser)
+  if(!typing()&&!listening){let p;try{p=DIC.start()}catch(e){p=Promise.reject(e)}
+    p.catch(e=>{if(e&&e.code==='not_granted'){$('#typeMode').checked=true;toast(micErr(e));if(mode==='answer')beginAnswerUI()}else showMicWarn(micErr(e))});}
+  micTesting=false;
+  T=buildTest();
+  $('#vStart').classList.add('hidden');$('#vExam').classList.remove('hidden');$('#endBtn').classList.remove('hidden');
+  window.scrollTo(0,0);next();
+};
+$('#endBtn').onclick=()=>{
+  if(!T||T.done)return;
+  const b=$('#endBtn');
+  if(b.dataset.c!=='1'){b.dataset.c='1';b.textContent='Click again to end';setTimeout(()=>{b.dataset.c='';b.textContent='End test'},3000);return}
+  if(mode==='answer'||mode==='prep')saveAnswer();
+  endTest(true);
+};
+function setPart(s){
+  $('#prog').style.width=(T.i/T.steps.length*100)+'%';
+  $('#partLbl').textContent=s.part===0?'Introduction':s.part===1?'Part 1 · '+s.topic:s.part===2?'Part 2 · Topic card':'Part 3 · '+s.topic;
+}
+function setCtrls(h){$('#ctrls').innerHTML=h}
+function showQuestion(s){
+  let h='';
+  if(s.lead)h+='<div class="lead">'+esc(s.lead)+'</div>';
+  h+=$('#showQ').checked?'<div class="qtext">'+esc(s.text)+'</div>':'<div class="qhidden">🎧 Listen to the question…</div>';
+  $('#bubbleBody').innerHTML=h;
+}
+async function next(){
+  if(T.done)return;
+  T.i++;const s=T.steps[T.i];
+  if(!s)return endTest(false);
+  setPart(s);
+  if(s.part===2)return runP2(s);
+  mode='examiner';cur={id:s.id,step:s,finals:[],partial:'',spoke:false};
+  $('#ansLbl').textContent=s.part===0?'Your answer (not marked)':'Your answer';
+  $('#ansMeta').textContent='';$('#barWrap').classList.add('hidden');
+  $('#trans').classList.remove('hidden');$('#typeArea').classList.add('hidden');
+  $('#trans').innerHTML='<span class="ph">Listen to the examiner…</span>';
+  showQuestion(s);phase={start:0};
+  setCtrls('<span class="hint">The examiner is speaking…</span>');
+  await speak((s.lead?s.lead+' ':'')+s.text);
+  if(T.done||T.steps[T.i]!==s)return;
+  startAnswer();
+}
+function startAnswer(opt={}){
+  mode='answer';
+  cur.t0=Date.now();cur.lastAct=Date.now();
+  const lim=opt.limit||(typing()?0:RULE[cur.step.part].limit);
+  phase={start:Date.now(),limit:lim,onEnd:opt.onEnd||(()=>autoFinish('time'))};
+  if(lim){$('#barWrap').classList.remove('hidden');$('#barFill').style.width='0'}
+  beginAnswerUI(opt);updInd();
+}
+function beginAnswerUI(opt={}){
+  if(typing()){
+    $('#trans').classList.add('hidden');$('#typeArea').classList.remove('hidden');$('#typeArea').value='';$('#typeArea').placeholder='Type your answer here…';setTimeout(()=>$('#typeArea').focus(),50);
+    setCtrls('<button class="btn primary" id="nextBtn">Next question →</button><span class="hint">Type your answer, then click the button.</span>');
+  }else{
+    renderTrans();
+    const secs=Math.round(((RULE[cur&&cur.step?cur.step.part:1])||{limit:30000}).limit/1000);
+    setCtrls('<div style="flex:1"><div class="hint">'+(opt.hint||'Speak now. You have '+secs+' seconds. When the time is up, the examiner will ask the next question.')+'</div></div><button class="btn ghost" id="nextBtn">I have finished →</button>');
+  }
+  $('#nextBtn').onclick=()=>autoFinish('button');
+}
+function renderTrans(){
+  const tr=$('#trans');if(!cur)return;
+  if(!cur.finals.length&&!cur.partial){tr.innerHTML='<span class="ph">'+(mode==='answer'?'Speak now… your words will appear here.':'Listen to the examiner…')+'</span>';return}
+  tr.innerHTML=esc(cur.finals.join(' '))+(cur.partial?' <span class="partial">'+esc(cur.partial)+'</span>':'');
+}
+const answerText=()=>typing()?$('#typeArea').value:(cur.finals.join(' ')+(cur.partial?' '+cur.partial:''));
+function saveAnswer(){
+  if(!cur||T.answers[cur.id])return;
+  const text=answerText().replace(/\s+/g,' ').trim();
+  const dur=cur.t0?((cur.spoke&&!typing()?cur.lastAct:Date.now())-cur.t0):0;
+  T.answers[cur.id]={id:cur.id,part:cur.step.part,question:cur.step.text,topic:cur.step.topic||'',text,dur:Math.max(0,dur),words:wc(text),graded:cur.step.graded};
+}
+let finishing=false;
+async function autoFinish(why){
+  if(mode!=='answer'||finishing)return;finishing=true;
+  mode='examiner';phase={start:0};
+  saveAnswer();updInd();
+  const p=cur.step.part;
+  try{
+    if(p===2){$('#barWrap').classList.add('hidden');setCtrls('');await speak(why==='time'?"Thank you. I'm afraid that's the end of the time.":"Thank you.");}
+    else if(why==='nospeech'){await speak("That's fine, let's move on.");}
+    else if(why==='max'){await speak("Thank you.");}
+  }finally{finishing=false}
+  next();
+}
+
+/* ---------- Part 2 ---------- */
+async function runP2(s){
+  mode='examiner';cur={id:'P2',step:s,finals:[],partial:'',spoke:false};
+  const c=s.card;
+  $('#ansLbl').textContent='Your notes (not marked)';$('#ansMeta').textContent='';
+  $('#trans').classList.add('hidden');$('#typeArea').classList.remove('hidden');$('#typeArea').value='';$('#typeArea').placeholder='You can write short notes here…';
+  $('#bubbleBody').innerHTML='<div class="lead">Now I\'m going to give you a topic, and I\'d like you to talk about it for one to two minutes. Before you talk, you\'ll have one minute to think about what you\'re going to say. You can make some notes if you wish.</div>';
+  setCtrls('<span class="hint">The examiner is speaking…</span>');phase={start:0};
+  await speak("Thank you. That's the end of Part 1. Now I'm going to give you a topic, and I'd like you to talk about it for one to two minutes. Before you talk, you'll have one minute to think about what you're going to say. You can make some notes if you wish. Here is your topic.");
+  if(T.done)return;
+  $('#bubbleBody').innerHTML='<div class="cue"><h3>'+esc(c.title)+'</h3><div>You should say:</div><ul>'+c.bullets.map(b=>'<li>'+esc(b)+'</li>').join('')+'</ul></div>';
+  $('#partLbl').textContent='Part 2 · Preparation (1 minute)';
+  mode='prep';
+  $('#barWrap').classList.remove('hidden');$('#barFill').style.width='0';
+  phase={start:Date.now(),limit:60000,onEnd:()=>p2Start(false)};
+  setCtrls('<button class="btn primary" id="readyBtn">🎙 I\'m ready — start speaking now</button><span class="hint">You have 1 minute to prepare. If you are ready earlier, click the button.</span>');
+  $('#readyBtn').onclick=()=>p2Start(true);
+}
+async function p2Start(early){
+  if(mode!=='prep')return;
+  T.notes=$('#typeArea').value;mode='examiner';phase={start:0};
+  setCtrls('<span class="hint">The examiner is speaking…</span>');
+  if(!early)await speak("All right? Remember, you have one to two minutes for this, so don't worry if I stop you. I'll tell you when the time is up. Can you start speaking now, please?");
+  if(T.done)return;
+  $('#partLbl').textContent='Part 2 · Speaking (up to 2 minutes)';
+  $('#ansLbl').textContent='Your answer';
+  $('#barFill').style.width='0';
+  startAnswer({limit:120000,hint:'You have 2 minutes. Talk about all the points on the card and keep speaking until the examiner stops you.',onEnd:()=>autoFinish('time')});
+}
+
+/* ---------- end ---------- */
+async function endTest(early){
+  if(T.done)return;T.done=true;mode='idle';
+  T.endingMic=true;stopSpeak();if(DIC&&listening)DIC.stop().catch(()=>{});releaseMic();
+  $('#micWarn').classList.add('hidden');
+  $('#prog').style.width='100%';$('#partLbl').textContent='Test finished';$('#tPhase').textContent='--:--';$('#tPhase').className='big';
+  T.total=Date.now()-T.t0;
+  $('#bubbleBody').innerHTML='<div class="qtext">Thank you. That is the end of the speaking test.</div>';
+  $('#trans').classList.remove('hidden');$('#typeArea').classList.add('hidden');$('#barWrap').classList.add('hidden');
+  $('#trans').innerHTML='<span class="ph">All your answers are saved. Click the button to get your feedback.</span>';
+  $('#ansLbl').textContent='';$('#ansMeta').textContent='';$('#micInd').textContent='';
+  setCtrls('<button class="btn primary" id="fbBtn">📊 Get my feedback</button>');
+  $('#endBtn').classList.add('hidden');
+  $('#fbBtn').onclick=()=>showResults();
+  if(!early)synthOrTts("Thank you. That is the end of the speaking test.");
+}
+function synthOrTts(t){if(TTS)TTS.speak(t,{voice:'rounded',language:'en'}).catch(()=>{});else if(window.speechSynthesis)synth(t)}
+/* ---------- results & AI feedback ---------- */
+const CRIT=[['FC','Fluency and Coherence'],['LR','Lexical Resource'],['GRA','Grammatical Range and Accuracy'],['P','Pronunciation']];
+function overallBand(bs){const a=bs.reduce((x,y)=>x+y,0)/bs.length;const f=Math.floor(a),r=a-f;return r<0.25?f:r<0.75?f+0.5:f+1}
+function gradedAnswers(){return T.steps.filter(s=>s.graded).map(s=>T.answers[s.id]||{id:s.id,part:s.part,question:s.text,topic:s.topic||'',text:'',dur:0,words:0})}
+function transcriptBlock(){
+  return gradedAnswers().map(a=>{
+    const wpm=a.dur>3000&&a.words?Math.round(a.words/(a.dur/60000)):0;
+    let q=a.question;if(a.part===2)q=T.card.title+' (You should say: '+T.card.bullets.join('; ')+')';
+    return `[${a.id}] Part ${a.part}${a.topic?' – '+a.topic:''}\nQ: ${q}\nSpeaking time: ${Math.round(a.dur/1000)}s, words: ${a.words}${wpm?', approx. '+wpm+' words/min':''}\nCandidate: ${a.text||'(no answer given)'}`;
+  }).join('\n\n');
+}
+function langLine(){return 'Write everything in English only, using simple, clear B1-level words and short sentences, so that a B1 learner can understand every comment easily. Do not use any other language.'}
+function promptAssess(){
+return `You are a senior, certified IELTS Speaking examiner with 15 years of experience. Assess the candidate below strictly according to the official public IELTS Speaking band descriptors (Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy, Pronunciation). Be honest and precise; do not inflate scores. Use whole bands (0-9) for each criterion, as in the real exam.
+
+IMPORTANT CONTEXT about the transcript:
+- It was produced by automatic speech recognition (ASR) in real time. Ignore punctuation and capitalisation. ASR often removes fillers (um, uh), so do not assume the candidate never hesitated.
+- Use the timing data (speaking time, words, words per minute) as evidence for fluency: very short answers, low word counts, or a Part 2 under ~1.5 minutes are weaknesses. Typical fluent speech is ~110-160 words per minute.
+- Pronunciation cannot be heard directly. Estimate it cautiously from indirect evidence: words that the recogniser clearly misheard (nonsense or out-of-context words), fragmented sentences, and overall intelligibility. Mention specific suspicious words as possible pronunciation problems, and say clearly in the summary that the pronunciation band is an estimate based on the transcript.
+- Part 3 answers should be general and analytical (reasons, examples, comparisons), not only personal.
+
+${langLine()}
+
+Candidate name: ${T.name}
+
+TRANSCRIPT:
+${transcriptBlock()}
+
+Return ONLY valid JSON (no markdown) with exactly this shape:
+{
+ "criteria": {
+  "FC": {"band": 6, "summary": "3-4 sentences referring to concrete evidence", "strengths": ["..."], "weaknesses": ["..."], "tips": ["concrete, actionable tip", "..."]},
+  "LR": {...same keys...},
+  "GRA": {...same keys...},
+  "P": {...same keys...}
+ },
+ "overall_comment": "4-5 sentences: the general picture, what holds the score back most, and what to focus on first",
+ "errors": [ {"q": "P1-2", "you_said": "exact words from the transcript", "correct": "corrected version", "type": "Grammar | Vocabulary | Collocation | Word form | Coherence | Pronunciation?", "why": "short explanation"} ],
+ "vocabulary_upgrades": [ {"you_said": "basic word/phrase the candidate used", "better": "more natural / higher-band alternative (natural collocation, not a cliché idiom)", "why": "short note on usage"} ],
+ "band_up_plan": ["step 1 to reach the next band", "step 2", "step 3", "step 4"]
+}
+Rules: 2-4 strengths, 2-4 weaknesses and 3 tips per criterion, each specific to THIS candidate with quotes where possible. List every clear grammar/vocabulary error you can find (up to 25), quoting the candidate's exact words; skip pure ASR punctuation issues. Give 6-10 vocabulary upgrades.`}
+function promptImprove(){
+return `You are an expert IELTS Speaking teacher. For each candidate answer below, write an improved version that would score around Band 7.5-8.
+Rules:
+- Keep the candidate's own ideas, situation and facts wherever possible; fix every error and make it more natural, fluent and well-organised. If there was no answer, write a fresh model answer.
+- Spoken style: natural, clear, contractions are fine. Use natural collocations and precise vocabulary; avoid cliché idioms (no "piece of cake", "raining cats and dogs", "once in a blue moon" etc.).
+- Length: Part 1 = 3-4 sentences; Part 2 = 230-280 words covering every bullet point; Part 3 = 5-6 sentences with a clear opinion, a reason, a general example (not personal) and a short conclusion.
+- For each answer also give 3-5 key phrases from your improved version worth learning.
+Add a one-sentence "note" in simple B1-level English explaining the main change you made. Use English only.
+
+TRANSCRIPT:
+${transcriptBlock()}
+
+Return ONLY valid JSON (no markdown): {"answers":[{"id":"P1-1","improved":"...","key_phrases":["...","..."],"note":"..."}]} with one entry for every answer id above, in the same order.`}
+
+async function ask(prompt){
+  if(!SAMPLE)throw {code:'unavailable',message:'Feedback is not available here'};
+  let v=await SAMPLE.json(prompt,{modelTier:'complex'});
+  if(typeof v==='string'){try{v=JSON.parse(v.replace(/^```(json)?|```$/g,''))}catch(e){}}
+  return v;
+}
+function promptPaste(){
+return `You are a senior, certified IELTS Speaking examiner. Below is the transcript of my IELTS Speaking mock test. Please give me detailed feedback in simple B1-level English.
+
+About the transcript: it was made by automatic speech recognition, so ignore punctuation and capital letters. Fillers (um, uh) may be missing. Pronunciation cannot be heard, so estimate it carefully from words that look misheard, and say that it is an estimate. Use the timing data as evidence for fluency (good fluent speech is about 110-160 words per minute; a Part 2 answer under 1.5 minutes is too short).
+
+Please give:
+1. A band (whole number, 0-9) for each criterion: Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy, Pronunciation, and the overall band (average rounded to the nearest 0.5 as in the real exam).
+2. For each criterion: a short summary with examples from my answers, my strengths, my weaknesses and 3 practical tips.
+3. A table of my mistakes: what I said → the correct version → a short reason.
+4. 6-10 better words or natural collocations I could use instead of my simple words (no cliché idioms).
+5. A better version of EVERY answer (Band 7.5-8 level) that keeps my ideas: Part 1 = 3-4 sentences, Part 2 = 230-280 words covering all the points, Part 3 = 5-6 sentences with a general (not personal) example.
+6. A 4-step plan to reach the next band.
+
+Candidate: ${T.name}
+
+TRANSCRIPT:
+${transcriptBlock()}`}
+function copyText(t){
+  const fb=()=>{const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();return ok};
+  if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t).then(()=>true).catch(()=>fb());
+  return Promise.resolve(fb());
+}
+function saveFile(name,data,type){
+  if(DL)return DL.save({filename:name,data}).catch(()=>{});
+  try{const u=URL.createObjectURL(new Blob([data],{type:type||'text/plain'}));const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}catch(e){toast('Could not download')}
+}
+let RES=null;
+async function showResults(){
+  $('#vExam').classList.add('hidden');const v=$('#vRes');v.classList.remove('hidden');window.scrollTo(0,0);
+  RES={assess:null,improve:null,errA:null,errB:null};
+  v.innerHTML='<div class="loading"><div class="spinner"></div><h2>The examiner is checking your answers…</h2><p class="hint" id="ldMsg">This can take 1–2 minutes.</p></div>';
+  const msgs=['Checking fluency and coherence…','Checking your vocabulary…','Finding grammar mistakes…','Writing better versions of your answers…'];let mi=0;
+  const iv=setInterval(()=>{const m=$('#ldMsg');if(m)m.textContent=msgs[mi++%msgs.length]},6000);
+  const anyText=gradedAnswers().some(a=>a.text);
+  if(!SAMPLE){clearInterval(iv);return renderPaste()}
+  if(!anyText){clearInterval(iv);RES.errA=RES.errB='No answers were recorded.';return renderResults()}
+  await Promise.all([
+    ask(promptAssess()).then(r=>RES.assess=r).catch(e=>RES.errA=e),
+    ask(promptImprove()).then(r=>RES.improve=r).catch(e=>RES.errB=e)
+  ]);
+  clearInterval(iv);
+  renderResults();
+}
+function errText(e){if(!e)return'';if(typeof e==='string')return e;if(e.code==='not_granted')return'Feedback was not allowed.';if(e.code==='rate_limited')return'Too many requests. Please wait a little and try again.';return (e.message||'Something went wrong')+'. Please try again.'}
+function list(a){return (a||[]).map(x=>'<li>'+esc(x)+'</li>').join('')}
+function renderResults(){
+  const A=RES.assess,B=RES.improve;const v=$('#vRes');
+  const ans=gradedAnswers();
+  const totalWords=ans.reduce((s,a)=>s+a.words,0),totalDur=ans.reduce((s,a)=>s+a.dur,0);
+  const wpm=totalDur>5000?Math.round(totalWords/(totalDur/60000)):0;
+  let h='';
+  if(A&&A.criteria){
+    const bands=CRIT.map(([k])=>Number(A.criteria[k]?.band)||0);const ov=overallBand(bands);
+    T.overall=ov;T.bands=bands;
+    h+='<div class="scorehead"><div class="ring" style="--p:'+(ov/9*100)+'"><span class="t">Overall</span><span class="v">'+ov.toFixed(1)+'</span><span class="t">Band</span></div><div><div style="font-size:13px;opacity:.8;letter-spacing:1px;text-transform:uppercase">'+esc(T.name)+' · '+new Date().toLocaleDateString()+'</div><div style="font-family:Fraunces,serif;font-size:24px;margin:2px 0 12px">IELTS Speaking Mock Result</div><div class="crit4">'+
+      CRIT.map(([k,n],i)=>'<div class="cb"><div class="k">'+n+'</div><div class="b">'+bands[i]+'</div><div class="m"><i style="width:'+(bands[i]/9*100)+'%"></i></div></div>').join('')+'</div></div></div>';
+    h+='<div class="ccard" style="margin-top:16px"><b>General comment.</b> '+esc(A.overall_comment)+'<div class="meta hint" style="margin-top:8px">Total speaking time: '+fmt(totalDur)+' · '+totalWords+' words'+(wpm?' · ~'+wpm+' words per minute':'')+' · Test length: '+fmt(T.total)+'</div></div>';
+    h+='<div class="sec"><h2>📋 Detailed feedback on each criterion</h2>'+CRIT.map(([k,n])=>{const c=A.criteria[k]||{};return '<div class="ccard"><div class="hd"><h3>'+n+'</h3><span class="bandtag">Band '+esc(c.band)+'</span></div><div>'+esc(c.summary)+'</div><div class="cols"><div class="good"><h4>✓ Strengths</h4><ul>'+list(c.strengths)+'</ul></div><div class="bad"><h4>✗ Weaknesses</h4><ul>'+list(c.weaknesses)+'</ul></div></div><div class="tips"><h4>How to improve</h4><ul>'+list(c.tips)+'</ul></div></div>'}).join('')+'</div>';
+    if(A.errors&&A.errors.length)h+='<div class="sec"><h2>🔍 Your mistakes and the correct versions</h2><table class="err"><tr><th style="width:60px">Question</th><th>You said</th><th>Correct version</th><th>Why</th></tr>'+A.errors.map(e=>'<tr><td><b>'+esc(e.q)+'</b></td><td class="wrong">'+esc(e.you_said)+'</td><td class="right">'+esc(e.correct)+'</td><td><span class="tagt">'+esc(e.type)+'</span><br>'+esc(e.why)+'</td></tr>').join('')+'</table></div>';
+    if(A.vocabulary_upgrades&&A.vocabulary_upgrades.length)h+='<div class="sec"><h2>💎 Better words and phrases</h2><table class="err"><tr><th>You used</th><th>Better choice</th><th>Note</th></tr>'+A.vocabulary_upgrades.map(e=>'<tr><td>'+esc(e.you_said)+'</td><td class="right">'+esc(e.better)+'</td><td>'+esc(e.why)+'</td></tr>').join('')+'</table></div>';
+    if(A.band_up_plan&&A.band_up_plan.length)h+='<div class="sec"><h2>🚀 Your plan for the next band</h2><div class="ccard"><ol class="plan">'+list(A.band_up_plan)+'</ol></div></div>';
+  }else{
+    h+='<div class="err-msg"><b>The scores could not be loaded.</b> '+esc(errText(RES.errA))+'</div>';
+  }
+  const imp={};if(B&&B.answers)B.answers.forEach(x=>imp[x.id]=x);
+  if(!B&&RES.errB)h+='<div class="err-msg"><b>The better answers could not be loaded.</b> '+esc(errText(RES.errB))+'</div>';
+  h+='<div class="sec"><h2>🗣 Your answers and better versions</h2>';
+  let lastPart=0;
+  ans.forEach(a=>{
+    if(a.part!==lastPart){lastPart=a.part;h+='<h3 style="margin:18px 0 8px;color:var(--red)">Part '+a.part+(a.part===2?'':' ')+'</h3>'}
+    const x=imp[a.id];const w=a.dur>3000&&a.words?Math.round(a.words/(a.dur/60000)):0;
+    const q=a.part===2?T.card.title:a.question;
+    h+='<div class="qa"><div class="q">'+esc(a.id)+' · '+esc(q)+'</div>'+(a.part===2?'<div class="hint">You should say: '+esc(T.card.bullets.join('; '))+'</div>':'')+'<div class="meta">'+fmt(a.dur)+' · '+a.words+' words'+(w?' · ~'+w+' words per minute':'')+'</div><div class="lab">Your answer</div><div class="yours">'+(esc(a.text)||'<i>(no answer)</i>')+'</div>'+
+      (x?'<div class="lab" style="color:var(--ok)">Better version (Band 7.5–8)</div><div class="better">'+esc(x.improved)+'</div>'+(x.note?'<div class="hint" style="margin-top:6px">💡 '+esc(x.note)+'</div>':'')+(x.key_phrases&&x.key_phrases.length?'<div class="chips">'+x.key_phrases.map(k=>'<span>'+esc(k)+'</span>').join('')+'</div>':''):'')+'</div>';
+  });
+  h+='</div>';
+  if(T.notes)h+='<div class="sec"><h2>📝 Your Part 2 notes</h2><div class="ccard" style="white-space:pre-wrap">'+esc(T.notes)+'</div></div>';
+  h+='<div class="actions">'+((!A||!B)&&SAMPLE?'<button class="btn primary" id="retryBtn">🔄 Try the feedback again</button>':'')+'<button class="btn dark" id="copyBtn">📋 Copy the report</button>'+'<button class="btn ghost" id="dlBtn">⬇ Download the report</button>'+'<button class="btn ghost" id="newBtn">↺ New test</button></div>';
+  h+='<a class="tg" href="https://t.me/OnlineIELTS_NA" target="_blank" rel="noopener"><svg width="38" height="38" viewBox="0 0 24 24" fill="#fff"><path d="M9.8 15.6l-.4 5.4c.6 0 .8-.2 1.1-.5l2.7-2.6 5.6 4.1c1 .6 1.7.3 2-.9l3.6-17c.4-1.5-.6-2.1-1.6-1.7L1.5 10.6c-1.4.6-1.4 1.4-.2 1.8l5.4 1.7L19.2 6.2c.6-.4 1.1-.2.7.2"/></svg><div><b>@OnlineIELTS_NA</b><span>Join our Telegram channel for more IELTS materials</span></div></a>';
+  v.innerHTML=h;
+  if($('#retryBtn'))$('#retryBtn').onclick=retry;
+  $('#copyBtn').onclick=()=>copyText(plainReport()).then(ok=>toast(ok?'The report is copied':'Could not copy'));
+  $('#dlBtn').onclick=()=>{const html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>IELTS Speaking Mock – '+esc(T.name)+'</title><style>'+document.querySelector('style').textContent+'</style></head><body><div class="wrap">'+$('#vRes').innerHTML.replace(/<div class="actions">[\s\S]*?<\/div>/,'')+'</div></body></html>';saveFile('IELTS_Speaking_Mock_'+T.name.replace(/\W+/g,'_')+'.html',html,'text/html')};
+  $('#newBtn').onclick=()=>{T=null;cur=null;mode='idle';$('#vRes').classList.add('hidden');$('#vStart').classList.remove('hidden');$('#partLbl').textContent='Not started';$('#tTotal').textContent='00:00';$('#prog').style.width='0';renderHist();window.scrollTo(0,0)};
+}
+async function renderPaste(){
+  const ans=gradedAnswers();const v=$('#vRes');
+  const totalWords=ans.reduce((s,a)=>s+a.words,0),totalDur=ans.reduce((s,a)=>s+a.dur,0);
+  let h='<div class="scorehead" style="grid-template-columns:1fr"><div><div style="font-size:13px;opacity:.8;letter-spacing:1px;text-transform:uppercase">'+esc(T.name)+' · '+new Date().toLocaleDateString()+'</div><div style="font-family:Fraunces,serif;font-size:26px;margin:4px 0 8px">Your test is finished!</div><div style="opacity:.9">Total speaking time: '+fmt(totalDur)+' · '+totalWords+' words · Test length: '+fmt(T.total)+'</div></div></div>';
+  h+='<div class="ccard" style="margin-top:16px"><h3 style="margin:0 0 8px">📊 How to get your feedback</h3><ol class="plan"><li>Click <b>Copy my answers for feedback</b> below.</li><li>Open <a href="https://claude.ai/new" target="_blank" rel="noopener">claude.ai</a> and paste the text into a new chat (Ctrl + V), then press Enter.</li><li>Claude will give you bands for the 4 criteria, your mistakes with corrections, better words and a better version of every answer.</li></ol><div class="hint">You can also send the copied text to your teacher.</div>'+
+     '<div class="actions"><button class="btn primary" id="cpPrompt">📋 Copy my answers for feedback</button><button class="btn ghost" id="dlAns">⬇ Download my answers</button></div></div>';
+  h+='<div class="sec"><h2>🗣 Your answers</h2>';let lp=0;
+  ans.forEach(a=>{if(a.part!==lp){lp=a.part;h+='<h3 style="margin:18px 0 8px;color:var(--red)">Part '+a.part+'</h3>'}
+    const w=a.dur>3000&&a.words?Math.round(a.words/(a.dur/60000)):0;
+    h+='<div class="qa"><div class="q">'+esc(a.id)+' · '+esc(a.part===2?T.card.title:a.question)+'</div><div class="meta">'+fmt(a.dur)+' · '+a.words+' words'+(w?' · ~'+w+' words per minute':'')+'</div><div class="yours">'+(esc(a.text)||'<i>(no answer)</i>')+'</div></div>'});
+  h+='</div><div class="actions"><button class="btn ghost" id="newBtn">↺ New test</button></div>';
+  h+='<a class="tg" href="https://t.me/OnlineIELTS_NA" target="_blank" rel="noopener"><svg width="38" height="38" viewBox="0 0 24 24" fill="#fff"><path d="M9.8 15.6l-.4 5.4c.6 0 .8-.2 1.1-.5l2.7-2.6 5.6 4.1c1 .6 1.7.3 2-.9l3.6-17c.4-1.5-.6-2.1-1.6-1.7L1.5 10.6c-1.4.6-1.4 1.4-.2 1.8l5.4 1.7L19.2 6.2c.6-.4 1.1-.2.7.2"/></svg><div><b>@OnlineIELTS_NA</b><span>Join our Telegram channel for more IELTS materials</span></div></a>';
+  v.innerHTML=h;
+  $('#cpPrompt').onclick=()=>copyText(promptPaste()).then(ok=>toast(ok?'Copied! Now paste it into a new Claude chat.':'Could not copy. Please use Download.'));
+  $('#dlAns').onclick=()=>saveFile('IELTS_Speaking_Answers_'+T.name.replace(/\W+/g,'_')+'.txt',promptPaste());
+  $('#newBtn').onclick=()=>{T=null;cur=null;mode='idle';$('#vRes').classList.add('hidden');$('#vStart').classList.remove('hidden');$('#partLbl').textContent='Not started';$('#tTotal').textContent='00:00';$('#prog').style.width='0';renderHist();window.scrollTo(0,0)};
+}
+async function retry(){
+  const v=$('#vRes');v.insertAdjacentHTML('afterbegin','<div class="loading" id="rl"><div class="spinner"></div><p>Checking again…</p></div>');window.scrollTo(0,0);
+  const jobs=[];
+  if(!RES.assess){RES.errA=null;jobs.push(ask(promptAssess()).then(r=>RES.assess=r).catch(e=>RES.errA=e))}
+  if(!RES.improve){RES.errB=null;jobs.push(ask(promptImprove()).then(r=>RES.improve=r).catch(e=>RES.errB=e))}
+  await Promise.all(jobs);renderResults();
+}
+function plainReport(){
+  const A=RES.assess,B=RES.improve;const imp={};if(B&&B.answers)B.answers.forEach(x=>imp[x.id]=x);
+  let s='IELTS SPEAKING MOCK — '+T.name+' — '+new Date().toLocaleDateString()+'\n';
+  if(A&&A.criteria){s+='Overall band: '+T.overall.toFixed(1)+'\n'+CRIT.map(([k,n],i)=>n+': '+T.bands[i]).join(' | ')+'\n\n'+A.overall_comment+'\n';
+    CRIT.forEach(([k,n])=>{const c=A.criteria[k]||{};s+='\n== '+n+' (Band '+c.band+') ==\n'+c.summary+'\n+ '+(c.strengths||[]).join('\n+ ')+'\n- '+(c.weaknesses||[]).join('\n- ')+'\n> '+(c.tips||[]).join('\n> ')+'\n'});
+    if(A.errors)s+='\n== Errors ==\n'+A.errors.map(e=>'['+e.q+'] '+e.you_said+' → '+e.correct+' ('+e.why+')').join('\n')+'\n';
+    if(A.vocabulary_upgrades)s+='\n== Vocabulary ==\n'+A.vocabulary_upgrades.map(e=>e.you_said+' → '+e.better).join('\n')+'\n';}
+  s+='\n== Answers ==\n';gradedAnswers().forEach(a=>{s+='\n['+a.id+'] '+(a.part===2?T.card.title:a.question)+'\nYou: '+(a.text||'-')+'\n'+(imp[a.id]?'Better: '+imp[a.id].improved+'\n':'')});
+  return s+'\nTelegram: @OnlineIELTS_NA — https://t.me/OnlineIELTS_NA';
+}
+function saveHist(){}
+function renderHist(){}
+
+</script>
+</body>
+</html>
